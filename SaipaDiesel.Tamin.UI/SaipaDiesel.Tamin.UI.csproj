@@ -19,4 +19,10 @@
 		<ProjectReference Include="..\Solution Library\SaipaDiesel.Tamin.Framework\SaipaDiesel.Tamin.Framework.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Compile Update="Form3.cs">
+	    <SubType>Form</SubType>
+	  </Compile>
+	</ItemGroup>
+
 </Project>

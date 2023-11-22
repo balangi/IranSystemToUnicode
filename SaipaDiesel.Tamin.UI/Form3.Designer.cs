@@ -1,6 +1,6 @@
 ﻿namespace SaipaDiesel.Tamin.UI;
 
-partial class Form1
+partial class Form3
 {
     /// <summary>
     /// Required designer variable.
@@ -100,11 +100,11 @@ partial class Form1
         Controls.Add(dataGridView1);
         Controls.Add(btnDiskKar);
         Margin = new Padding(4, 3, 4, 3);
-        Name = "Form1";
+        Name = "Form3";
         RightToLeft = RightToLeft.Yes;
         RightToLeftLayout = true;
         StartPosition = FormStartPosition.CenterScreen;
-        Text = "Form1";
+        Text = "Form3";
         Load += Form1_Load;
         ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
         ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
