@@ -6,6 +6,7 @@ using SaipaDiesel.Tamin.Framework.DataHelpers;
 using SaipaDiesel.Tamin.Framework.Converters;
 using System.Text;
 using static System.Windows.Forms.LinkLabel;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SaipaDiesel.Tamin.UI;
 
@@ -41,7 +42,7 @@ public partial class Form1 : Form
                 if (frm.DialogResult == DialogResult.OK)
                 {
                     FillGridView<WorkshopInfoDto>(txtDiskKar.Text);
-                    Application.DoEvents();
+                    System.Windows.Forms.Application.DoEvents();
                 }
             }
             else
@@ -96,7 +97,7 @@ public partial class Form1 : Form
                     }
                     else if (t.Name.ToLower() == "decimal")
                     {
-                        propertyInfo.SetValue(listT[i], Convert.ToDecimal( line1[j]), null);
+                        propertyInfo.SetValue(listT[i], Convert.ToDecimal(line1[j]), null);
                     }
                 }
                 j++;
@@ -130,67 +131,52 @@ public partial class Form1 : Form
         return line1;
     }
 
-    //private void ReadDiskFile<T>(string text)
-    //{
-    //    try
-    //    {
-    //        var dt = GetDataTableDBF(text);
+    private void button1_Click(object sender, EventArgs e)
+    {
+        ReadDbfFile<WorkshopInfoDto>();
+    }
 
-    //        //var text = dr["dsk_name"].ToString();
-    //        //var text = "¥‏¢ ‘•‏‘¨ –î¤ھ";
-    //        //text = text.IranSystemToUnicode();
-    //        //var text1 = text.UnicodeToIranSystem();
-    //        //var text2 = text1.IranSystemToUnicode();
+    private void ReadDbfFile<T>()
+    {
+        try
+        {
+            List<string> columns = new List<string>();
+            var dt = ((DataView)dataGridView1.DataSource).Table;
+            foreach (DataColumn dr in dt.Columns)
+            {
+                columns.Add(dr.ColumnName);
+            }
 
-    //        dataGridView1.DataSource = dt.DefaultView;
+            var str = string.Join(",", columns.ToArray());
 
-    //        List<string> columns = new List<string>();
-    //        foreach (DataColumn dr in dt.Columns)
-    //        {
-    //            columns.Add(dr.ColumnName);
-    //        }
+            var list2 = dt.DataTableToList<T>();
 
-    //        var str = string.Join(",", columns.ToArray());
+            foreach (T item in list2)
+            {
+                var properties = typeof(T).GetProperties();
+                foreach (var property in properties)
+                {
+                    var propertyValue = property.GetValue(item);
+                    var propertyInfo = item.GetType().GetProperty(property.Name);
 
-    //        var list2 = dt.DataTableToList<T>();
+                    if (propertyInfo != null)
+                    {
+                        propertyValue = propertyValue != null ? propertyValue.ToString().UnicodeToIranSystem() : propertyValue;
 
-    //        foreach (T item in list2)
-    //        {
-    //            var properties = typeof(T).GetProperties();
-    //            foreach (var property in properties)
-    //            {
-    //                var propertyValue = property.GetValue(item);
-    //                var propertyInfo = item.GetType().GetProperty(property.Name);
+                        Type t = Nullable.GetUnderlyingType(propertyInfo.PropertyType) ?? propertyInfo.PropertyType;
+                        if (t.Name.ToLower() == "string")
+                        {
+                            propertyInfo.SetValue(item, propertyValue, null);
+                        }
+                    }
+                }
+            }
 
-    //                if (propertyInfo != null)
-    //                {
-    //                    propertyValue = propertyValue != null ? propertyValue.ToString().IranSystemToUnicode() : propertyValue;
-
-    //                    Type t = Nullable.GetUnderlyingType(propertyInfo.PropertyType) ?? propertyInfo.PropertyType;
-    //                    if (t.Name.ToLower() == "string")
-    //                    {
-    //                        propertyInfo.SetValue(item, propertyValue, null);
-    //                    }
-    //                }
-    //            }
-    //        }
-
-    //        dataGridView2.DataSource = list2.ListToDataTable("DiskDT").DefaultView;
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        MessageBox.Show(ex.Message.ToString());
-    //    }
-    //}
-
-    //public static DataTable GetDataTableDBF(string strFileName)
-    //{
-    //    OdbcConnection conn = new OdbcConnection($"Provider=vfpoledb;DSN=VFPDB;Data Source={strFileName};Collating Sequence=machine;");
-    //    conn.Open();
-
-    //    OdbcDataAdapter adapter = new OdbcDataAdapter($"SELECT * FROM [{strFileName}]", conn);
-    //    DataSet ds = new DataSet();
-    //    adapter.Fill(ds);
-    //    return ds.Tables[0];
-    //}
+            dataGridView2.DataSource = list2.ListToDataTable("DiskDT").DefaultView;
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message.ToString());
+        }
+    }
 }

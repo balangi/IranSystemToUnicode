@@ -33,6 +33,7 @@ partial class Form1
         txtDiskKar = new TextBox();
         lblDiskKar = new Label();
         dataGridView2 = new DataGridView();
+        button1 = new Button();
         ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
         ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
         SuspendLayout();
@@ -56,7 +57,7 @@ partial class Form1
         dataGridView1.Location = new Point(13, 68);
         dataGridView1.Margin = new Padding(4, 3, 4, 3);
         dataGridView1.Name = "dataGridView1";
-        dataGridView1.Size = new Size(1037, 269);
+        dataGridView1.Size = new Size(1037, 244);
         dataGridView1.TabIndex = 2;
         // 
         // txtDiskKar
@@ -83,17 +84,30 @@ partial class Form1
         // 
         dataGridView2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-        dataGridView2.Location = new Point(13, 354);
+        dataGridView2.Location = new Point(13, 378);
         dataGridView2.Margin = new Padding(4, 3, 4, 3);
         dataGridView2.Name = "dataGridView2";
-        dataGridView2.Size = new Size(1037, 197);
+        dataGridView2.Size = new Size(1037, 173);
         dataGridView2.TabIndex = 29;
+        // 
+        // button1
+        // 
+        button1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+        button1.Location = new Point(13, 330);
+        button1.Margin = new Padding(4, 3, 4, 3);
+        button1.Name = "button1";
+        button1.Size = new Size(1037, 27);
+        button1.TabIndex = 30;
+        button1.Text = "تبدیل اطلاعات به ایران سیستم";
+        button1.UseVisualStyleBackColor = true;
+        button1.Click += button1_Click;
         // 
         // Form1
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(1065, 621);
+        Controls.Add(button1);
         Controls.Add(dataGridView2);
         Controls.Add(txtDiskKar);
         Controls.Add(lblDiskKar);
@@ -119,5 +133,6 @@ partial class Form1
     private TextBox txtDiskKar;
     private Label lblDiskKar;
     private DataGridView dataGridView2;
+    private Button button1;
 }
 
